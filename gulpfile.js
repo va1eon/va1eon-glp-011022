@@ -31,6 +31,7 @@ import terser from 'gulp-terser';
 /* === IMAGES === */
 import gulpImage from 'gulp-image';
 import gulpWebp from 'gulp-webp';
+import gulpSvgSprite from 'gulp-svg-sprite';
 
 let isDev = false;
 
@@ -43,7 +44,8 @@ const path = {
     js: `${srcDir}/js/main.js`,
     img: `${srcDir}/img/**/*.{jpg,jpeg,png,svg,gif}`,
     imgFormat: `${srcDir}/img/**/*.{jpg,jpeg,png}`,
-    assets: [`${srcDir}/fonts/**/*.*`, `${srcDir}/icons/**/*.*`,]
+    assets: [`${srcDir}/fonts/**/*.*`, `${srcDir}/icons/**/*.*`,],
+    svg: `${srcDir}/sprites/**/*.svg`,
 
   },
   dist: {
@@ -51,6 +53,7 @@ const path = {
     css: `${buildDir}/css/`,
     js: `${buildDir}/js/`,
     img: `${buildDir}/img/`,
+    svg: `${buildDir}/sprites/`,
   },
   watch: {
     html: `${srcDir}/*.html`,
@@ -58,7 +61,8 @@ const path = {
     js: `${srcDir}/js/**/*.js`,
     img: `${srcDir}/img/**/*.{jpg,jpeg,png,svg,gif}`,
     imgFormat: `${srcDir}/img/**/*.{jpg,jpeg,png}`,
-    assets: [`${srcDir}/fonts/**/*.*`, `${srcDir}/icons/**/*.*`,]
+    assets: [`${srcDir}/fonts/**/*.*`, `${srcDir}/icons/**/*.*`,],
+    svg: `${srcDir}/sprites/**/*.svg`,
   }
 }
 
@@ -150,6 +154,19 @@ const webp = () => src(path.src.imgFormat)
     once: true
   }));
 
+const svgSprite = () => src(path.src.svg)
+  .pipe(gulpSvgSprite({
+    mode: {
+      stack: {
+        sprite: '../sprites.svg',
+      }
+    }
+  }))
+  .pipe(dest(path.dist.svg))
+  .pipe(browserSync.stream({
+    once: true
+  }));
+
 const copy = () => src(path.src.assets, {base: buildDir})
   .pipe(dest(buildDir))
   .pipe(browserSync.stream({
@@ -174,6 +191,7 @@ const server = () => {
   watch(path.watch.img, image);
   watch(path.watch.imgFormat, webp);
   watch(path.watch.assets, copy);
+  watch(path.watch.svg, svgSprite);
 }
 
 const devMode = ready => {
@@ -185,11 +203,11 @@ const clean = () => del(buildDir, {
   force: true,
 });
 
-const base = parallel(html, scss, js, image, webp, copy);
+const base = parallel(html, scss, js, image, webp, svgSprite, copy);
 
 export const build = series(clean, base);
 
-export const dev = series(devMode, base)
+export const dev = series(clean, devMode, base)
 
 export default series(dev, server);
 
