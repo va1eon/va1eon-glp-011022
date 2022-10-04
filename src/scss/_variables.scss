@@ -1,2 +1,7 @@
-$fontFamily: 'Roboto', sans-serif;
-$fontSize: 16px;
+$fontFamily: 'Roboto';
+$fontWeight: 400;
+$fontSize: rem(15);
+
+$contentWidth: 1200px;
+$containerOffset: 15px;
+$containerWidth: calc(#{$contentWidth} + #{$containerOffset} * 2);

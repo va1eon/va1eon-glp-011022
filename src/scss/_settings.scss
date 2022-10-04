@@ -5,5 +5,50 @@
 }
 
 body {
-  font-family: $fontFamily;
+  margin: 0;
+  font-family: $fontFamily, sans-serif;
+  font-weight: $fontWeight;
+  font-size: $fontSize;
+}
+
+a {
+  text-decoration: none;
+}
+
+.js-focus-visible:focus:not(.focus-visible) {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.btn-reset {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.list-reset {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 $containerOffset;
+  width: 100%;
+  max-width: $containerWidth;
 }

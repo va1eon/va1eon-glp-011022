@@ -40,5 +40,9 @@
     "last 2 version",
     "not dead",
     "> 1%"
-  ]
+  ],
+  "dependencies": {
+    "focus-visible": "^5.2.0",
+    "normalize.css": "^8.0.1"
+  }
 }

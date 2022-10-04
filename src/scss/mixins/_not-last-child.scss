@@ -1,0 +1,23 @@
+@mixin not-mr($value) {
+  &:not(:last-child) {
+    margin-right: $value;
+  }
+}
+
+@mixin not-ml($value) {
+  &:not(:last-child) {
+    margin-left: $value;
+  }
+}
+
+@mixin not-mb($value) {
+  &:not(:last-child) {
+    margin-bottom: $value;
+  }
+}
+
+@mixin not-mt($value) {
+  &:not(:last-child) {
+    margin-top: $value;
+  }
+}
